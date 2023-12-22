@@ -1,6 +1,6 @@
 Usefull Docker commands:
 
-Rebuild the image, must be done if code of an app changed
+Rebuild the images, must be done if code of an app changed
 docker compose up -d --build
 
 Delete existing infra + delete volumes
