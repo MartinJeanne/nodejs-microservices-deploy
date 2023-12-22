@@ -20,35 +20,35 @@ services:
   product-service:
     build:
       context: ../nodejs-microservices-product
+    depends_on:
+      - mongo-db
     deploy:
       replicas: 3
     environment:
       - MONGO_URL=mongodb://martin:martin@mongo-db:27017
-    depends_on:
-      - mongo-db
 
   command-service:
     build:
       context: ../nodejs-microservices-command
+    depends_on:
+      - mongo-db
     deploy:
       replicas: 2
     environment:
       - MONGO_URL=mongodb://martin:martin@mongo-db:27017
       - PRODUCT_URL=http://product-service:3000/api
-    depends_on:
-      - mongo-db
 
   gateway:
     build:
       context: ../nodejs-microservices-gateway
     ports:
       - "4000:4000"
-    environment:
-      - PRODUCT_HOST=product-service
-      - COMMAND_HOST=command-service
     depends_on:
       - product-service
       - command-service
+    environment:
+      PRODUCT_HOST: product-service
+      COMMAND_HOST: command-service
 
   keycloak-db:
     image: mysql:8
@@ -64,6 +64,8 @@ services:
 
   keycloak:
       image: quay.io/keycloak/keycloak:22.0.0
+      depends_on:
+        - keycloak-db
       environment:
         - KEYCLOAK_USER=keycloak
         - KEYCLOAK_PASSWORD=keycloak
@@ -82,5 +84,4 @@ services:
       ports:
         - 8080:8080
         - 443:443
-      depends_on:
-        - keycloak-db
+        

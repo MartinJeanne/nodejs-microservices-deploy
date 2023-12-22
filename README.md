@@ -1,3 +1,6 @@
+# Deploy
+
+Don't forget to create a realm in keycloak after deploying.
 Usefull Docker commands:
 
 Rebuild the images, must be done if code of an app changed
