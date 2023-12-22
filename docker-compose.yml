@@ -8,7 +8,7 @@ volumes:
 
 services:
   mongo-db:
-    image: "mongo:latest"
+    image: "mongo:7"
     ports:
       - "27017:27017"
     volumes:
@@ -19,7 +19,7 @@ services:
 
   product-service:
     build:
-      context: ../products
+      context: ../nodejs-microservices-product
     deploy:
       replicas: 3
     environment:
@@ -29,7 +29,7 @@ services:
 
   command-service:
     build:
-      context: ../commands
+      context: ../nodejs-microservices-command
     deploy:
       replicas: 2
     environment:
@@ -40,7 +40,7 @@ services:
 
   gateway:
     build:
-      context: ../gateway
+      context: ../nodejs-microservices-gateway
     ports:
       - "4000:4000"
     environment:
