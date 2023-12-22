@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  mongo-db:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=martin
+      - MONGO_INITDB_ROOT_PASSWORD=martin
+
+  product-service:
+    build:
+      context: ../products
+    deploy:
+      replicas: 3
+    environment:
+      - MONGO_URL=mongodb://martin:martin@mongo-db:27017
+
+  command-service:
+    build:
+      context: ../commands
+    deploy:
+      replicas: 2
+    environment:
+      - MONGO_URL=mongodb://martin:martin@mongo-db:27017
+      - PRODUCT_URL=http://product-service:3000/api
+
+  gateway:
+    build:
+      context: ../gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - PRODUCT_HOST=product-service
+      - COMMAND_HOST=command-service
+
