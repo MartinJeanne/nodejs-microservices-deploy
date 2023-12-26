@@ -5,7 +5,8 @@ Lauch the containers with:
 ```bash
 docker compose up -d
 ```
-Then, import the pre-made realm in [Keycloak](http://localhost:8080/) with: realm-export.json
+Then, import in [Keycloak](http://localhost:8080/) the pre-made realm with: realm-export.json
+Keycloak login and password are: `root`
 
 Then check the Gateway README.md
 
